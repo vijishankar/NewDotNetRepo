@@ -15,5 +15,4 @@ jobs:
         with:
           repo_token: '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'
           date: '3 months ago'
-          dry_run: true
-          delete_tags: true
+          dry_run: no
