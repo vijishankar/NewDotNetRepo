@@ -1,29 +1,24 @@
-name: Delete abandoned branches
-
+name: Cleanup old branches
 on:
   push:
     branches:
-      - main
-
-  # Allow workflow to be manually run from the GitHub UI
-  workflow_dispatch:
+      - master
 
 jobs:
-  cleanup_old_branches:
+  housekeeping:
+    name: Cleanup old branches
     runs-on: ubuntu-latest
-    name: Satisfy my repo CDO
     steps:
-      - name: Delete those pesky dead branches
-        uses: phpdocker-io/github-actions-delete-abandoned-branches@v1
-        id: delete_stuff
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run delete-old-branches-action
+        uses: beatlabs/delete-old-branches-action@v0.0.9
         with:
-          github_token: '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'
-          last_commit_age_days: 1
-          ignore_branches: main
-          github_base_url: https://api.github.com/api/v3
-
-          # Disable dry run and actually get stuff deleted
-          dry_run: no
-
-      - name: Get output
-        run: "echo 'Deleted branches: ${{ steps.delete_stuff.outputs.deleted_branches }}'"
+          repo_token: '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'
+          date: '3 months ago'
+          dry_run: true
+          delete_tags: true
+          minimum_tags: 5
+          extra_protected_branch_regex: ^(foo|bar)$
+          extra_protected_tag_regex: '^v.*'
+          exclude_open_pr_branches: true
