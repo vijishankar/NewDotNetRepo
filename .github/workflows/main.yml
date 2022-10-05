@@ -6,6 +6,6 @@ jobs:
     steps:
       - uses: cultureamp/delete-old-branches-action@v0.3
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: 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
           min-num-branches: 20
           days-to-keep-branches: 14
