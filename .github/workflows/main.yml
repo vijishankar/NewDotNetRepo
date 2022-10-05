@@ -1,11 +1,13 @@
-name: cleanup-old-branches
-on: [push]
+name: delete branch on close pr
+on: 
+  pull_request:
+    types: [closed]
+  
 jobs:
-  cleanup-old-branches:
+  delete-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: cultureamp/delete-old-branches-action@v0.3
-        with:
-          repo-token: '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'
-          min-num-branches: 20
-          days-to-keep-branches: 14
+      - name: delete branch
+        uses: SvanBoxel/delete-merged-branch@main
+        env:
+          GITHUB_TOKEN: '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'
